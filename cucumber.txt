@@ -1,0 +1,103 @@
+package stepDefination;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.Assert;
+
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import cucumber.api.java.en.Given;
+
+public class LF_TC_003 {
+	WebDriver driver;		
+	 @Given("^Open  chrome and start application$")
+	 public void open_chrome_and_start_application()throws Throwable{
+System.setProperty("webdriver.chrome.driver","C:\\Users\\bindushree.p\\Downloads\\chromedriver_win32\\chromedriver.exe");
+	 driver = new ChromeDriver();
+	 driver.get("http://mysgecsa01:82/Common/Login.aspx");
+	 driver.manage().window().maximize();
+	 }
+
+@When("^User enter the main  page and click on the signup link$")
+public void User_enter_the_main_page_and_click_on_the_signup_link()throws Throwable{ 
+	driver.findElement(By.id("ctl00_body_lbtSignUp")).click();
+}
+
+@Then("^User should fill the details salutation,Firstname and lastname$")
+public void User_should_fill_the_details_salutation_Firstname_and_lastname()throws Throwable{
+	Thread.sleep(3000);
+	Select fs=new Select(driver.findElement(By.xpath("//*[contains(@name,'ctl00$body$ddlSalutation')]")));
+	fs.selectByVisibleText("Ms.");
+	fs.selectByIndex(2);
+	driver.findElement(By.xpath(".//input[@name='ctl00$body$txtFirstName']")).sendKeys("Bindushree");
+	driver.findElement(By.xpath(".//input[@name='ctl00$body$txtLastName']")).sendKeys("Pattanaik");
+}
+@And("^User should fill the DOB,Address,emailId$")
+public void User_should_fill_the_DOB_Address_emailId()throws Throwable{
+	WebElement text_bday=driver.findElement(By.xpath(".//form//input[@name='ctl00$body$txtDOB']"));
+	text_bday.sendKeys("09/12/1995");
+	
+	driver.findElement(By.id("ctl00_body_txtAddress")).sendKeys("saicomplex");
+	driver.findElement(By.xpath(".//input[@name='ctl00$body$txtEmailId']")).sendKeys("mamun_134@yahoo.com");
+}
+@And("^User should select  the contact no country code  and number should entered$")
+public void User_should_select_the_contact_no_country_code_and_number_should_entered()throws Throwable{
+	Select con=new Select(driver.findElement(By.id("ctl00_body_ddlCountryCode")));
+	con.selectByValue("+91");
+	con.selectByIndex(1);
+	
+	driver.findElement(By.id("ctl00_body_txtContactNo")).sendKeys("9439448813");
+}
+	@Then("^User should enter the userid and click on the check userid bottom$")
+	public void User_should_enter_the_userid_and_click_on_the_check_userid_bottom()throws Throwable{
+		driver.findElement(By.xpath(".//input[@id='ctl00_body_txtUserID']")).sendKeys("bindu123");
+		Thread.sleep(3000);
+		
+	}
+		@Then ("^User should get a message userid is available for use$")
+		public void User_should_get_a_message_userid_is_available_for_use()throws Throwable{
+    driver.findElement(By.xpath("//input[@type='submit' and @name='ctl00$body$btnCheckUserId']")).click();
+		}
+		@Then ("^User should give the login Password,confirm login password,Transaction password and confirm Transation Password$")
+		public void User_should_give_the_login_Password_confirm_login_password_Transaction_password_and_confirm_Transation_Password()throws Throwable{
+			driver.findElement(By.xpath("//input[@name='ctl00$body$txtUserPassword']")).sendKeys("nmho@1234"); 
+			Thread.sleep(5000);
+			driver.findElement(By.xpath("//input[@name='ctl00$body$txtConfirmUserPwd']")).sendKeys("nmho@1234"); 
+			driver.findElement(By.xpath("//input[@name='ctl00$body$txtTransactionPwd']")).sendKeys("nmho@1234");
+			driver.findElement(By.xpath("//input[@name='ctl00$body$txtConfirmTranPwd']")).sendKeys("nmho@1234");
+		}
+		@Then ("^User should select one security question from dropdown what is your pets name and the answer should enter as  jojo$")
+		public void User_should_select_one_security_question_from_dropdown_what_is_your_pets_name_and_the_answer_should_enter_as_jojo()throws Throwable{
+			Select fs1=new Select(driver.findElement(By.id("ctl00_body_ddlSecurityQuestion")));
+		      fs1.selectByVisibleText("What is your pets name?");
+		      fs1.selectByIndex(1);
+		      driver.findElement(By.id("ctl00_body_txtSecurityAnswer")).sendKeys("jojo");
+		}
+		@Then("^User should click on the submit buttom$")
+		public void User_should_click_on_the_submit_buttom()throws Throwable{
+			WebElement message= driver.findElement(By.xpath(".//input[@type='submit' and @name='ctl00$body$btnSubmit']")); 
+			message.click();
+			@And("^User should get message will come as Registration Successful and userid generated$")
+			public void User_should_get_message_will_come_as_Registration_successful_and_userid_generated()throws Throwable{
+				
+				System.out.println("Registration Successful");
+				Assert.assertEquals(message,"Registration Successful");
+		
+		      driver.close();
+			
+		}
+		}
+}
