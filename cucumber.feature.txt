@@ -1,36 +1,14 @@
-@chaining
-Feature: signup the Application
+Feature: signup the facebook Application
   As a new user
   I should be able to fill all the details.
 
   Background: 
     Given Open Google chrome and start application.
 
-  Scenario Outline: Signup should be successful.
-    When User enter the main  page and click on the signup link.
-    Then User should fill the details salutation,Firstname and lastname
-    And User should fill the DOB,Address,emailId.
-    And User should select  the contact no country code  and number should entered.
-    Then User should enter the userid and click on the check userid bottom
-    Then User should get a message userid is available for use.
-    Then User should give the login Password,confirm login password,Transaction password and confirm Transation Password.
-    Then User should select one security question from dropdown what is your pets name and the answer should enter as  jojo
-    
-    Then User should click on the submit buttom.
-    And User should get message will come as Registration Successful.                                                                                                                   
- 
-        |
-
-  Scenario Outline: Log in scenario
-  Given Open Google chrome and start application.
-   Then I enter the login  page and fill the details
-    And I enter the userID and password
-    Then I clcik on the submit button.
-    And The login should be successful.
-
-    Examples: 
-      | username       | password |
-      |bindu123          | nmho@1234    |
-
-
-
+  Scenario: Signup should be successful.
+    When User enter the main  page and enter the details.
+    Then User should fill the details Firstname and lastname
+    And User should fill the details emailId and new password.
+    And User should select  the Birthday from the dropdown and gender
+    Then User should click on signup
+     
